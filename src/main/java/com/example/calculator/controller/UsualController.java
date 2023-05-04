@@ -8,9 +8,10 @@ import javafx.scene.control.Label;
 public class UsualController {
     @FXML
     private Label output;
-    private long num;
+    private double num;
     private String operation = "";
     private boolean start = true;
+    private final String regex = ".*\\.0+";
 
     @FXML
     private void processNumPad (ActionEvent event){
@@ -20,6 +21,18 @@ public class UsualController {
         }
         String value = ((Button) event.getSource()).getText();
         output.setText(output.getText() + value);
+    }
+
+    @FXML
+    private void processAbc (ActionEvent event) {
+        double num = Double.parseDouble(output.getText());
+        if (num > 0) {
+            num = -Math.abs(num);
+            rounding(String.valueOf(num));
+        } else {
+            num = Math.abs(num);
+            rounding(String.valueOf(num));
+        }
     }
 
     @FXML
@@ -33,22 +46,19 @@ public class UsualController {
                 return;
             }
             operation = value;
-            num = Long.parseLong(output.getText());
+            num = Double.parseDouble(output.getText());
             output.setText("");
         }
         else {
-            if (operation.isEmpty()){
-                return;
-            }
-            if (output.getText().isEmpty()){
+            if (operation.isEmpty() || output.getText().isEmpty()) {
                 output.setText("ERROR");
                 operation = "";
+            } else {
+                String result = calculate(num, Double.parseDouble(output.getText()), operation);
+                rounding(result);
+                operation = "";
                 start = true;
-                return;
             }
-            output.setText(calculate(num, Long.parseLong(output.getText()), operation)) ;
-            operation = "";
-            start = true;
         }
     }
 
@@ -59,20 +69,35 @@ public class UsualController {
         operation = "";
     }
 
-    private String calculate(long num1, long num2, String op) {
-        if (op.equals("+")) {
-            return String.valueOf(num1 + num2);
-        } else if (op.equals("-")) {
-            return String.valueOf(num1 - num2);
-        } else if (op.equals("×")) {
-            return String.valueOf(num1 * num2);
-        } else if (op.equals("÷")) {
-            if (num2 == 0) {
+    private String calculate(double num1, double num2, String op) {
+        switch (op) {
+            case "+" -> {
+                return String.valueOf(num1 + num2);
+            }
+            case "-" -> {
+                return String.valueOf(num1 - num2);
+            }
+            case "×" -> {
+                return String.valueOf(num1 * num2);
+            }
+            case "÷" -> {
+                if (num2 == 0) {
+                    return "ERROR";
+                }
+                return String.valueOf(num1 / num2);
+            }
+            default -> {
                 return "ERROR";
             }
-            return String.valueOf(num1 / num2);
+        }
+    }
+
+    private void rounding(String num) {
+        if (num.matches(regex)){
+            long result = (long) Double.parseDouble(num);
+            output.setText(String.valueOf(result));
         } else {
-            return "ERROR";
+            output.setText(num);
         }
     }
 }
