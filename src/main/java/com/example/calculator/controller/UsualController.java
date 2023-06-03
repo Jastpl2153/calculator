@@ -11,7 +11,6 @@ public class UsualController {
     private double num;
     private String operation = "";
     private boolean start = true;
-    private final String regex = ".*\\.0+";
 
     @FXML
     private void processNumPad (ActionEvent event){
@@ -50,7 +49,7 @@ public class UsualController {
             output.setText("");
         }
         else {
-            if (operation.isEmpty() || output.getText().isEmpty()) {
+            if (operation.isEmpty() || output.getText().isEmpty() || output.getText().equals(".")) {
                 output.setText("ERROR");
                 operation = "";
             } else {
@@ -60,6 +59,11 @@ public class UsualController {
                 start = true;
             }
         }
+    }
+
+    @FXML
+    private void percent (ActionEvent event){
+
     }
 
     @FXML
@@ -93,6 +97,7 @@ public class UsualController {
     }
 
     private void rounding(String num) {
+        String regex = ".*\\.0+";
         if (num.matches(regex)){
             long result = (long) Double.parseDouble(num);
             output.setText(String.valueOf(result));
