@@ -62,11 +62,6 @@ public class UsualController {
     }
 
     @FXML
-    private void percent (ActionEvent event){
-
-    }
-
-    @FXML
     private void cleanOutput (ActionEvent event){
         output.setText("0");
         start = true;
@@ -89,6 +84,9 @@ public class UsualController {
                     return "ERROR";
                 }
                 return String.valueOf(num1 / num2);
+            }
+            case "%" -> {
+                return String.valueOf(num1 * num2 / 100);
             }
             default -> {
                 return "ERROR";
