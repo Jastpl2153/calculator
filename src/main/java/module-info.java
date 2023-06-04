@@ -5,4 +5,6 @@ module com.example.calculator {
     opens com.example.calculator to javafx.fxml;
     exports com.example.calculator;
     opens com.example.calculator.controller to javafx.fxml;
+
+    exports com.example.calculator.controller;
 }
