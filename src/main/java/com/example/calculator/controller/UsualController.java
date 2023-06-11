@@ -7,6 +7,8 @@ import javafx.scene.control.Label;
 
 public class UsualController {
     @FXML
+    private Label info;
+    @FXML
     private Label output;
     private double num;
     private String operation = "";
@@ -23,18 +25,6 @@ public class UsualController {
     }
 
     @FXML
-    private void processAbc (ActionEvent event) {
-        double num = Double.parseDouble(output.getText());
-        if (num > 0) {
-            num = -Math.abs(num);
-            rounding(String.valueOf(num));
-        } else {
-            num = Math.abs(num);
-            rounding(String.valueOf(num));
-        }
-    }
-
-    @FXML
     private void processOperation (ActionEvent event){
         if (output.getText().equals("ERROR")){
             return;
@@ -45,6 +35,7 @@ public class UsualController {
                 return;
             }
             operation = value;
+            info.setText(output.getText() + operation);
             num = Double.parseDouble(output.getText());
             output.setText("");
         }
@@ -53,6 +44,7 @@ public class UsualController {
                 output.setText("ERROR");
                 operation = "";
             } else {
+                info.setText(info.getText() + output.getText());
                 String result = calculate(num, Double.parseDouble(output.getText()), operation);
                 rounding(result);
                 operation = "";
@@ -62,13 +54,9 @@ public class UsualController {
     }
 
     @FXML
-    private void percent (ActionEvent event){
-
-    }
-
-    @FXML
     private void cleanOutput (ActionEvent event){
-        output.setText("0");
+        output.setText("");
+        info.setText("");
         start = true;
         operation = "";
     }
@@ -90,6 +78,9 @@ public class UsualController {
                 }
                 return String.valueOf(num1 / num2);
             }
+            case "%" -> {
+                return String.valueOf(num1 * num2 / 100);
+            }
             default -> {
                 return "ERROR";
             }
@@ -103,6 +94,18 @@ public class UsualController {
             output.setText(String.valueOf(result));
         } else {
             output.setText(num);
+        }
+    }
+
+    @FXML
+    private void processAbc (ActionEvent event) {
+        double num = Double.parseDouble(output.getText());
+        if (num > 0) {
+            num = -Math.abs(num);
+            rounding(String.valueOf(num));
+        } else {
+            num = Math.abs(num);
+            rounding(String.valueOf(num));
         }
     }
 
