@@ -61,7 +61,7 @@ public class UsualController {
         operation = "";
     }
 
-    private String calculate(double num1, double num2, String op) {
+    public String calculate(double num1, double num2, String op) {
         switch (op) {
             case "+" -> {
                 return String.valueOf(num1 + num2);
@@ -107,5 +107,13 @@ public class UsualController {
             num = Math.abs(num);
             rounding(String.valueOf(num));
         }
+    }
+
+    public Label getOutput() {
+        return output;
+    }
+
+    public void setOutput(Label output) {
+        this.output = output;
     }
 }
