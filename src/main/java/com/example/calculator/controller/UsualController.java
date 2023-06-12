@@ -4,8 +4,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 
 public class UsualController {
+    @FXML
+    private VBox window;
+    @FXML
+    private Button colorStyle;
     @FXML
     private Label info;
     @FXML
@@ -14,6 +19,21 @@ public class UsualController {
     private String operation = "";
     private boolean start = true;
 
+    @FXML
+    void style(ActionEvent event) {
+        if (window.getStyle().equals("-fx-background-color: #111111;")) {
+            window.setStyle("-fx-background-color: white;");
+            colorStyle.setStyle("-fx-background-color: #111111; -fx-text-fill: white; -fx-background-radius: 50");
+            output.setStyle("-fx-text-fill: #111111;");
+            info.setStyle("-fx-text-fill: #111111;");
+        } else {
+            window.setStyle("-fx-background-color: #111111;");
+            colorStyle.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-background-radius: 50");
+            output.setStyle("-fx-text-fill: white; ");
+            info.setStyle("-fx-text-fill: white; ");
+        }
+    }
+    
     @FXML
     private void processNumPad (ActionEvent event){
         if (start) {
