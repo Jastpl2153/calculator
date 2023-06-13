@@ -2,11 +2,22 @@ package com.example.calculator.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class UsualController {
+    @FXML
+    private MenuItem advancedCalc;
+    @FXML
+    private MenuItem usualCalc;
     @FXML
     private VBox window;
     @FXML
@@ -15,27 +26,57 @@ public class UsualController {
     private Label info;
     @FXML
     private Label output;
+
+    private Scene scene;
     private double num;
     private String operation = "";
     private boolean start = true;
 
     @FXML
-    void style(ActionEvent event) {
-        if (window.getStyle().equals("-fx-background-color: #111111;")) {
-            window.setStyle("-fx-background-color: white;");
-            colorStyle.setStyle("-fx-background-color: #111111; -fx-text-fill: white; -fx-background-radius: 50");
-            output.setStyle("-fx-text-fill: #111111;");
-            info.setStyle("-fx-text-fill: #111111;");
-        } else {
-            window.setStyle("-fx-background-color: #111111;");
-            colorStyle.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-background-radius: 50");
-            output.setStyle("-fx-text-fill: white; ");
-            info.setStyle("-fx-text-fill: white; ");
+    protected void typeCalc(ActionEvent event) {
+        if (event.getSource() == advancedCalc) {
+            setTypeCalcScene("/com/example/calculator/AdvancedCalc.fxml", 333, 629);
+        } else if (event.getSource() == usualCalc) {
+            setTypeCalcScene("/com/example/calculator/UsualCalc.fxml", 298, 537);
         }
     }
-    
+
+    private void setTypeCalcScene(String fxmlPath, double width, double height) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root = loader.load();
+            Scene scene = new Scene(root, width, height);
+            Stage stage = (Stage) window.getScene().getWindow();
+            stage.setScene(scene);
+
+            UsualController controller = loader.getController();
+            controller.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @FXML
-    private void processNumPad (ActionEvent event){
+    void style(ActionEvent event) {
+        String backgroundColor;
+        String textColor;
+
+        if (window.getStyle().equals("-fx-background-color: #111111;")) {
+            backgroundColor = "white";
+            textColor = "#111111";
+        } else {
+            backgroundColor = "#111111";
+            textColor = "white";
+        }
+
+        window.setStyle("-fx-background-color: " + backgroundColor + ";");
+        colorStyle.setStyle("-fx-background-color: " + textColor + "; -fx-text-fill: " + backgroundColor + "; -fx-background-radius: 50");
+        output.setStyle("-fx-text-fill: " + textColor + ";");
+        info.setStyle("-fx-text-fill: " + textColor + ";");
+    }
+
+    @FXML
+    protected void processNumPad(ActionEvent event) {
         if (start) {
             output.setText("");
             start = false;
@@ -45,21 +86,20 @@ public class UsualController {
     }
 
     @FXML
-    private void processOperation (ActionEvent event){
-        if (output.getText().equals("ERROR")){
+    protected void processOperation(ActionEvent event) {
+        if (output.getText().equals("ERROR")) {
             return;
         }
         String value = ((Button) event.getSource()).getText();
-        if (!value.equals("=")){
-            if (!operation.isEmpty()){
+        if (!value.equals("=")) {
+            if (!operation.isEmpty()) {
                 return;
             }
             operation = value;
             info.setText(output.getText() + operation);
             num = Double.parseDouble(output.getText());
             output.setText("");
-        }
-        else {
+        } else {
             if (operation.isEmpty() || output.getText().isEmpty() || output.getText().equals(".")) {
                 output.setText("ERROR");
                 operation = "";
@@ -74,7 +114,7 @@ public class UsualController {
     }
 
     @FXML
-    private void cleanOutput (ActionEvent event){
+    protected void cleanOutput(ActionEvent event) {
         output.setText("");
         info.setText("");
         start = true;
@@ -107,9 +147,9 @@ public class UsualController {
         }
     }
 
-    private void rounding(String num) {
+    protected void rounding(String num) {
         String regex = ".*\\.0+";
-        if (num.matches(regex)){
+        if (num.matches(regex)) {
             long result = (long) Double.parseDouble(num);
             output.setText(String.valueOf(result));
         } else {
@@ -118,14 +158,11 @@ public class UsualController {
     }
 
     @FXML
-    private void processAbc (ActionEvent event) {
-        double num = Double.parseDouble(output.getText());
-        if (num > 0) {
-            num = -Math.abs(num);
-            rounding(String.valueOf(num));
-        } else {
-            num = Math.abs(num);
-            rounding(String.valueOf(num));
+    protected void erase(ActionEvent event) {
+        String text = output.getText();
+        if (text.length() > 0) {
+            text = text.substring(0, text.length() - 1);
+            output.setText(text);
         }
     }
 
@@ -135,5 +172,77 @@ public class UsualController {
 
     public void setOutput(Label output) {
         this.output = output;
+    }
+
+    public MenuItem getAdvancedCalc() {
+        return advancedCalc;
+    }
+
+    public void setAdvancedCalc(MenuItem advancedCalc) {
+        this.advancedCalc = advancedCalc;
+    }
+
+    public MenuItem getUsualCalc() {
+        return usualCalc;
+    }
+
+    public void setUsualCalc(MenuItem usualCalc) {
+        this.usualCalc = usualCalc;
+    }
+
+    public VBox getWindow() {
+        return window;
+    }
+
+    public void setWindow(VBox window) {
+        this.window = window;
+    }
+
+    public Button getColorStyle() {
+        return colorStyle;
+    }
+
+    public void setColorStyle(Button colorStyle) {
+        this.colorStyle = colorStyle;
+    }
+
+    public Label getInfo() {
+        return info;
+    }
+
+    public void setInfo(Label info) {
+        this.info = info;
+    }
+
+    public Scene getScene() {
+        return scene;
+    }
+
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
+
+    public double getNum() {
+        return num;
+    }
+
+    public void setNum(double num) {
+        this.num = num;
+    }
+
+    public String getOperation() {
+        return operation;
+    }
+
+    public void setOperation(String operation) {
+        this.operation = operation;
+    }
+
+    public boolean isStart() {
+        return start;
+    }
+
+    public void setStart(boolean start) {
+        this.start = start;
     }
 }

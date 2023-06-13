@@ -21,8 +21,8 @@
                <children>
                   <MenuButton mnemonicParsing="false" style="-fx-background-color: F29611;" text="☰">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="Action 1" />
-                      <MenuItem mnemonicParsing="false" text="Action 2" />
+                      <MenuItem fx:id="usualCalc" mnemonicParsing="false" onAction="#typeCalc" text="Обычный" />
+                      <MenuItem fx:id="advancedCalc" mnemonicParsing="false" onAction="#typeCalc" text="Продвинутый" />
                     </items>
                   </MenuButton>
                   <Button fx:id="colorStyle" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" minHeight="12.0" minWidth="21.0" mnemonicParsing="false" onAction="#style" prefHeight="27.0" prefWidth="54.0" style="-fx-background-color: white; -fx-background-radius: 50; -fx-text-fill: black;" text="White" textAlignment="CENTER">
@@ -79,7 +79,7 @@
                         <Font name="Arial" size="19.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 30; -fx-background-color: #ACACAC;" text="⌫" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <Button fx:id="erase" mnemonicParsing="false" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 30; -fx-background-color: #ACACAC;" text="⌫" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <font>
                         <Font name="Arial" size="19.0" />
                      </font>
