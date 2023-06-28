@@ -148,7 +148,7 @@ public class UsualController {
     }
 
     protected void rounding(String num) {
-        String regex = ".*\\.0+";
+        String regex = "-?\\d+\\.0*";
         if (num.matches(regex)) {
             long result = (long) Double.parseDouble(num);
             output.setText(String.valueOf(result));
