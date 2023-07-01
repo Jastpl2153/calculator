@@ -194,36 +194,38 @@
                         <Font name="Arial" size="19.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#textOperationProcess" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 30; -fx-background-color: #ACACAC;" GridPane.columnIndex="4">
+                  <Button mnemonicParsing="false" onAction="#textOperationProcess" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 30; -fx-background-color: #ACACAC;" text="ln" GridPane.columnIndex="1">
                      <font>
                         <Font name="Arial" size="19.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#textOperationProcess" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 30; -fx-background-color: #ACACAC;" GridPane.columnIndex="3">
-                     <font>
-                        <Font name="Arial" size="19.0" />
-                     </font>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#textOperationProcess" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 30; -fx-background-color: #ACACAC;" text="ln" GridPane.columnIndex="2">
-                     <font>
-                        <Font name="Arial" size="19.0" />
-                     </font>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#textOperationProcess" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 30; -fx-background-color: #ACACAC;" text="log" GridPane.columnIndex="1">
+                  <Button mnemonicParsing="false" onAction="#textOperationProcess" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 30; -fx-background-color: #ACACAC;" text="log">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Button>
-                  <MenuButton mnemonicParsing="false" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 30; -fx-background-color: #ACACAC;" text="⊿">
+                  <MenuButton alignment="CENTER" mnemonicParsing="false" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 30; -fx-background-color: #ACACAC;" text="⊿" GridPane.columnIndex="4">
                     <items>
-                        <MenuItem mnemonicParsing="false" />
-                      <MenuItem mnemonicParsing="false" />
-                      <MenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#fibonacci" text="fibonacci" />
+                      <MenuItem mnemonicParsing="false" onAction="#sin" text="sin" />
+                      <MenuItem mnemonicParsing="false" onAction="#cos" text="cos" />
+                        <MenuItem mnemonicParsing="false" onAction="#tan" text="tan" />
                     </items>
                      <font>
                         <Font name="Arial" size="15.0" />
                      </font>
                   </MenuButton>
+                  <Button mnemonicParsing="false" onAction="#processAbc" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 30; -fx-background-color: #ACACAC;" text="abc" GridPane.columnIndex="2">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                  </Button>
+                  <VBox alignment="CENTER" prefHeight="55.0" prefWidth="55.0" GridPane.columnIndex="3">
+                     <children>
+                        <Button fx:id="rad" alignment="CENTER" mnemonicParsing="false" onAction="#radOrDeg" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 30 30 0 0; -fx-background-color: F29611;" text="rad" />
+                        <Button fx:id="deg" alignment="CENTER" mnemonicParsing="false" onAction="#radOrDeg" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 0 0 30 30; -fx-background-color: #ACACAC;" text="deg" textAlignment="CENTER" />
+                     </children>
+                  </VBox>
                </children>
             </GridPane>
          </children>

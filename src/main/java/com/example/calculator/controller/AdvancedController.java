@@ -7,6 +7,13 @@ import javafx.scene.control.Button;
 import java.util.Arrays;
 
 public class AdvancedController extends UsualController{
+
+    @FXML
+    private Button deg;
+    @FXML
+    private Button rad;
+    private boolean radOrDeg = true;
+
     @Override
     protected void processOperation(ActionEvent event) {
         String outputText = getOutput().getText();
@@ -21,9 +28,9 @@ public class AdvancedController extends UsualController{
                 getOutput().setText(String.valueOf(factorial(numbers[0])));
             } else if (outputText.matches("\\d+(\\.\\d+)?\\^\\d+(\\.\\d+)?")) {
                 getOutput().setText(String.valueOf(Math.pow(numbers[0], numbers[1])));
-            } else if (outputText.matches("log\\(\\d+(\\.\\d+)?")) {
+            } else if (outputText.matches("log \\d+(\\.\\d+)?")) {
                 getOutput().setText(String.valueOf(Math.log10(numbers[0])));
-            } else if (outputText.matches("ln\\(\\d+(\\.\\d+)?")) {
+            } else if (outputText.matches("ln \\d+(\\.\\d+)?")) {
                 getOutput().setText(String.valueOf(Math.log(numbers[0])));
             } else {
                 super.processOperation(event);
@@ -31,6 +38,52 @@ public class AdvancedController extends UsualController{
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void textOperationProcess(ActionEvent event) {
+        String buttonText = ((Button) event.getSource()).getText();
+        String currentOutput = getOutput().getText();
+
+        if (buttonText.equals("!")) { // Услови для факториала
+            getOutput().setText(currentOutput + buttonText);
+        } else if (buttonText.equals("log") || buttonText.equals("ln")) { // Условие для лог...
+            getOutput().setText(buttonText + " ");
+        }else if (currentOutput.equals("0") || currentOutput.equals("")) {
+            getOutput().setText(buttonText);
+        } else if (currentOutput.matches("\\d+(\\.\\d+)?")) { //Условие для корня
+            getOutput().setText(currentOutput + buttonText);
+        }
+    }
+
+    @Override
+    protected void processNumPad(ActionEvent event) {
+        String buttonText = ((Button) event.getSource()).getText();
+        String currentOutput = getOutput().getText();
+
+        if (currentOutput.equals("√") || currentOutput.equals("log ") || currentOutput.equals("ln ") ) {
+            setStart(false);
+            getOutput().setText(currentOutput + buttonText);
+        } else {
+            super.processNumPad(event);
+        }
+    }
+
+    private double[] numberPattern(String input){
+        String[] numbersString = Arrays.stream(input.split("[√^!]|log |ln "))
+                .filter(str -> !str.isEmpty())
+                .toArray(String[]::new);
+
+        if (numbersString.length != 0) {
+            double[] numbers = new double[numbersString.length];
+            for (int i = 0; i < numbersString.length; i++) {
+                    numbers[i] = Double.parseDouble(numbersString[i]);
+            }
+            return numbers;
+        } else {
+            getOutput().setText("ERROR");
+        }
+        return null;
     }
 
     private double factorial(double number) {
@@ -52,60 +105,123 @@ public class AdvancedController extends UsualController{
     }
 
     @FXML
-    void textOperationProcess(ActionEvent event) {
-        String buttonText = ((Button) event.getSource()).getText();
-        String currentOutput = getOutput().getText();
-
-        if (buttonText.equals("!") && currentOutput.equals("0") || currentOutput.equals("1")) {
-            getOutput().setText(currentOutput + buttonText);
-        } else if (buttonText.equals("log") || buttonText.equals("ln")) {
-            getOutput().setText(buttonText + "(");
-        }else if (currentOutput.equals("0") || currentOutput.equals("")) {
-            getOutput().setText(buttonText);
-        } else if (currentOutput.matches("\\d+(\\.\\d+)?")) {
-            getOutput().setText(currentOutput + buttonText);
-        }
-    }
-
-    @Override
-    protected void processNumPad(ActionEvent event) {
-        String buttonText = ((Button) event.getSource()).getText();
-        String currentOutput = getOutput().getText();
-
-        if (currentOutput.equals("√") || currentOutput.equals("log(") || currentOutput.equals("ln(") ) {
-            if (isStart()) {
-                setStart(false);
-            }
-            getOutput().setText(currentOutput + buttonText);
-        } else {
-            super.processNumPad(event);
-        }
-    }
-
-    private double[] numberPattern(String input){
-        String[] numbersString = Arrays.stream(input.split("[√^!]|log\\(|ln\\("))
-                .filter(str -> !str.isEmpty())
-                .toArray(String[]::new);
-
-        if (numbersString.length != 0) {
-            double[] numbers = new double[numbersString.length];
-            for (int i = 0; i < numbersString.length; i++) {
-                    numbers[i] = Double.parseDouble(numbersString[i]);
-            }
-            return numbers;
-        } else {
-            getOutput().setText("ERROR");
-        }
-        return null;
-    }
-
-    @FXML
-    void numberPi(ActionEvent event) {
+    private void numberPi(ActionEvent event) {
         getOutput().setText(String.valueOf(Math.PI));
     }
 
     @FXML
-    void numberE(ActionEvent event) {
+    private void numberE(ActionEvent event) {
         getOutput().setText(String.valueOf(Math.E));
+    }
+
+    @FXML
+    private void processAbc (ActionEvent event) {
+        if (getOutput().getText().matches("-?\\d+(\\.\\d+)?")) {
+            double num = Double.parseDouble(getOutput().getText());
+            if (num > 0) {
+                num = -Math.abs(num);
+                rounding(String.valueOf(num));
+            } else {
+                num = Math.abs(num);
+                rounding(String.valueOf(num));
+            }
+        }
+    }
+
+    @FXML
+    private void fibonacci(ActionEvent event) {
+        int number = 0;
+        try {
+            number = Integer.parseInt(getOutput().getText());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        if (number <= 0) {
+             getOutput().setText("0");
+        } else if (number == 1 || number == 2) {
+            getOutput().setText("1");
+        } else {
+            int fib1 = 1;
+            int fib2 = 1;
+            int fibonacci = 0;
+
+            for (int i = 3; i <= number; i++) {
+                fibonacci = fib1 + fib2;
+                fib1 = fib2;
+                fib2 = fibonacci;
+            }
+
+            getOutput().setText(Integer.toString(fibonacci));
+        }
+    }
+
+    @FXML
+    void radOrDeg(ActionEvent event) {
+        String name = ((Button) event.getSource()).getText();
+        if (name.equals("rad")) {
+            radOrDeg = true;
+            rad.setStyle("-fx-background-color:  F29611; -fx-background-radius: 30 30 0 0");
+            deg.setStyle("-fx-background-color: #ACACAC; -fx-background-radius: 0 0 30 30");
+        } else {
+            radOrDeg = false;
+            rad.setStyle("-fx-background-color: #ACACAC; -fx-background-radius: 30 30 0 0");
+            deg.setStyle("-fx-background-color:  F29611; -fx-background-radius: 0 0 30 30");
+        }
+    }
+
+    @FXML
+    void sin(ActionEvent event) {
+        if (!getOutput().getText().isEmpty()) {
+            Double number = Double.parseDouble(getOutput().getText());
+            getInfo().setText("sin " + number);
+            if (radOrDeg == true) {
+                double result = Math.sin(number);
+                getOutput().setText(String.valueOf(result));
+            } else {
+                double angleRadians = Math.toRadians(number);
+                double sinValue = Math.sin(angleRadians);
+                getOutput().setText(String.valueOf(sinValue));
+            }
+        }else {
+            getOutput().setText("ERROR");
+        }
+    }
+
+    @FXML
+    void cos(ActionEvent event) {
+        if (!getOutput().getText().isEmpty()) {
+            Double number = Double.parseDouble(getOutput().getText());
+            getInfo().setText("cos " + number);
+            if (radOrDeg == true) {
+                double result = Math.cos(number);
+                getOutput().setText(String.valueOf(result));
+            } else {
+                double angleRadians = Math.toRadians(number);
+                double sinValue = Math.cos(angleRadians);
+                getOutput().setText(String.valueOf(sinValue));
+            }
+        }else {
+            getOutput().setText("ERROR");
+        }
+    }
+
+    @FXML
+    void tan(ActionEvent event) {
+        if (!getOutput().getText().isEmpty()) {
+            Double number = Double.parseDouble(getOutput().getText());
+            getInfo().setText("tan " + number);
+            if (radOrDeg == true) {
+                double result = Math.tan(number);
+                getOutput().setText(String.valueOf(result));
+            } else {
+                double angleRadians = Math.toRadians(number);
+                double sinValue = Math.tan(angleRadians);
+                getOutput().setText(String.valueOf(sinValue));
+            }
+        }else {
+            getOutput().setText("ERROR");
+        }
     }
 }
