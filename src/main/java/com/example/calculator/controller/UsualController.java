@@ -15,6 +15,8 @@ import java.io.IOException;
 
 public class UsualController {
     @FXML
+    private MenuItem converterCalc;
+    @FXML
     private MenuItem advancedCalc;
     @FXML
     private MenuItem usualCalc;
@@ -38,6 +40,8 @@ public class UsualController {
             setTypeCalcScene("/com/example/calculator/AdvancedCalc.fxml", 333, 629);
         } else if (event.getSource() == usualCalc) {
             setTypeCalcScene("/com/example/calculator/UsualCalc.fxml", 298, 537);
+        } else if (event.getSource() == converterCalc) {
+            setTypeCalcScene("/com/example/calculator/ConverterCalc.fxml", 298, 537);
         }
     }
 
