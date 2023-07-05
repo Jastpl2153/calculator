@@ -41,6 +41,7 @@ public class NumberSystem extends UsualController implements Initializable {
 
     private ToggleButton active;
     private Label output;
+    String num;
 
     private ToggleButton[] toggleButtons = new ToggleButton[4];
 
@@ -56,15 +57,23 @@ public class NumberSystem extends UsualController implements Initializable {
     void buttonAction(ActionEvent event) {
         ToggleButton action = (ToggleButton) event.getSource();
         for (ToggleButton a : toggleButtons) {
-            if (a == action){
+            if (a == action) {
                 a.setSelected(true);
-                action.setStyle("-fx-background-color:  F29611; -fx-background-radius: 10 0 0 10");
+                a.setDisable(true);
+                action.setStyle("-fx-background-color:  F29611; -fx-background-radius: 10 0 0 10; -fx-opacity: 1;");
                 active = getActionButton();
+                output = getLabelOutput(active);
+                setInfoAndOutput(action);
                 blockingNumPad();
             } else {
                 a.setSelected(false);
+                a.setDisable(false);
                 a.setStyle("-fx-background-color:  #ACACAC; -fx-background-radius: 10 0 0 10");
             }
+        }
+        if (!getOperation().isEmpty()) {
+            calculateSystemNumber();
+            output.setText("");
         }
     }
 
@@ -79,7 +88,6 @@ public class NumberSystem extends UsualController implements Initializable {
         }
         if (trueActive()) {
             String value = ((Button) event.getSource()).getText();
-            output = getLabelOutput(active);
             output.setText(output.getText() + value);
             calculateSystemNumber();
         }
@@ -120,12 +128,7 @@ public class NumberSystem extends UsualController implements Initializable {
 
     private void calculateSystemNumber(){
         int num;
-        if (dec.isSelected()) {
-            num = Integer.parseInt(outputDec.getText());
-            outputBin.setText(Integer.toBinaryString(num));
-            outputHex.setText(Integer.toHexString(num));
-            outputOct.setText(Integer.toOctalString(num));
-        } else if (bin.isSelected()) {
+        if (bin.isSelected()) {
             String numText = outputBin.getText();
             num = Integer.parseInt(numText, 2);
             outputDec.setText(String.valueOf(num));
@@ -137,6 +140,12 @@ public class NumberSystem extends UsualController implements Initializable {
             outputDec.setText(String.valueOf(num));
             outputHex.setText(Integer.toHexString(num));
             outputBin.setText(Integer.toBinaryString(num));
+        }
+        if (dec.isSelected()) {
+            num = Integer.parseInt(outputDec.getText());
+            outputBin.setText(Integer.toBinaryString(num));
+            outputHex.setText(Integer.toHexString(num));
+            outputOct.setText(Integer.toOctalString(num));
         } else if (hex.isSelected()) {
             String numText = outputHex.getText();
             num = Integer.parseInt(numText, 16);
@@ -145,26 +154,28 @@ public class NumberSystem extends UsualController implements Initializable {
             outputOct.setText(Integer.toOctalString(num));
         }
     }
-
     @Override
     protected void cleanOutput(ActionEvent event) {
         outputBin.setText("");
         outputDec.setText("");
         outputHex.setText("");
         outputOct.setText("");
+        getInfo().setText("");
+        setOperation("");
         setStart(true);
     }
-
     @Override
     protected void erase(ActionEvent event) {
-        String text = output.getText();
-        if (text.length() > 0) {
-            text = text.substring(0, text.length() - 1);
-            output.setText(text);
-            if (!output.getText().isEmpty()) {
-                calculateSystemNumber();
-            } else {
-                cleanOutput(event);
+        if (output != null) {
+            String text = output.getText();
+            if (text.length() > 0) {
+                text = text.substring(0, text.length() - 1);
+                output.setText(text);
+                if (!output.getText().isEmpty()) {
+                    calculateSystemNumber();
+                } else {
+                    cleanOutput(event);
+                }
             }
         }
     }
@@ -202,5 +213,76 @@ public class NumberSystem extends UsualController implements Initializable {
                 }
             }
         }
+    }
+
+    @Override
+    protected void processOperation(ActionEvent event) {
+        String value = ((Button) event.getSource()).getText();
+        if (!value.equals("=")) {
+            if (!getOperation().isEmpty()) {
+                return;
+            }
+            setOperation(value);
+            getInfo().setText(output.getText() + getOperation());
+            num = output.getText();
+            output.setText("");
+        }
+        else {
+            if (getOperation().isEmpty() || output.getText().isEmpty() || output.getText().equals(".")) {
+                output.setText("ERROR");
+                setOperation("");
+            } else {
+                getInfo().setText(getInfo().getText() + output.getText());
+                String result = calculateProcess(num, output.getText(), getOperation());
+                output.setText(String.valueOf(result));
+                calculateSystemNumber();
+                setOperation("");
+                getInfo().setText("");
+                setStart(true);
+            }
+        }
+    }
+
+    private String calculateProcess(String num1, String num2, String op) {
+        int operand1 = 0, operand2 = 0;
+        double result;
+
+        if (hex.isSelected()) {
+            operand1 = Integer.parseInt(num1, 16);
+            operand2 = Integer.parseInt(num2, 16);
+        } else if (dec.isSelected()) {
+            operand1 = Integer.parseInt(num1);
+            operand2 = Integer.parseInt(num2);
+        } else if (oct.isSelected()) {
+            operand1 = Integer.parseInt(num1, 8);
+            operand2 = Integer.parseInt(num2, 8);
+        } else if (bin.isSelected()) {
+            operand1 = Integer.parseInt(num1, 2);
+            operand2 = Integer.parseInt(num2, 2);
+        }
+
+        result = Double.parseDouble(calculate(operand1, operand2, op));
+
+        if (hex.isSelected()) {
+            return Integer.toHexString((int) result);
+        } else if (dec.isSelected()) {
+            return String.valueOf((int) result);
+        } else if (oct.isSelected()) {
+            return Integer.toOctalString((int) result);
+        } else if (bin.isSelected()) {
+            return Integer.toBinaryString((int) result);
+        }
+        return null;
+    }
+
+    private void setInfoAndOutput(ToggleButton active) {
+        if (!getInfo().getText().isEmpty()) {
+            getInfo().setText(output.getText() + getOperation());
+            setNum();
+        }
+    }
+
+    public void setNum() {
+        this.num = getInfo().getText().replaceAll("[^0-9a-f]", "");
     }
 }
