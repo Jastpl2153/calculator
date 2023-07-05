@@ -45,7 +45,7 @@ public class UsualController {
         } else if (event.getSource() == converterCalc) {
             setTypeCalcScene("/com/example/calculator/ConverterCalc.fxml", 298, 537);
         } else if (event.getSource() == systemNumberCalc) {
-            setTypeCalcScene("/com/example/calculator/NumberSystem.fxml", 333, 584);
+            setTypeCalcScene("/com/example/calculator/NumberSystem.fxml", 333, 629);
         }
     }
 
