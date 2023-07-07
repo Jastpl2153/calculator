@@ -45,7 +45,7 @@ public class UsualController {
         } else if (event.getSource() == converterCalc) {
             setTypeCalcScene("/com/example/calculator/ConverterCalc.fxml", 298, 537);
         } else if (event.getSource() == dateCalc) {
-            setTypeCalcScene("/com/example/calculator/DateCalc.fxml", 298, 537);
+            setTypeCalcScene("/com/example/calculator/DifferenceDateCalc.fxml", 298, 537);
         }
     }
 
