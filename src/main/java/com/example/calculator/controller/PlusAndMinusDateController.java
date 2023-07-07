@@ -206,16 +206,13 @@ public class PlusAndMinusDateController extends DifferenceDateController {
     void style(ActionEvent event) {
         String backgroundColor;
         String textColor;
-        String labelColor;
 
         if (getWindow().getStyle().equals("-fx-background-color: #111111;")) {
             backgroundColor = "white";
             textColor = "#111111";
-            labelColor = "F29611";
         } else {
             backgroundColor = "#111111";
             textColor = "white";
-            labelColor = " #3E3E3E";
         }
 
         getLabelStart().setStyle("-fx-text-fill: " + textColor + ";");
@@ -223,8 +220,5 @@ public class PlusAndMinusDateController extends DifferenceDateController {
         labelResult.setStyle("-fx-text-fill: " + textColor + ";");
         getWindow().setStyle("-fx-background-color: " + backgroundColor + ";");
         getColorStyle().setStyle("-fx-background-color: " + textColor + "; -fx-text-fill: " + backgroundColor + "; -fx-background-radius: 50");
-        getOutputDay().setStyle("-fx-text-fill: " + textColor + "; -fx-background-color: " + labelColor);
-        getOutputMonth().setStyle("-fx-text-fill: " + textColor + "; -fx-background-color: " + labelColor);
-        getOutputYear().setStyle("-fx-text-fill: " + textColor + "; -fx-background-color: " + labelColor);
     }
 }
