@@ -130,9 +130,9 @@ public class DifferenceDateController extends UsualController  {
         labelPeriod.setStyle("-fx-text-fill: " + textColor + ";");
         getWindow().setStyle("-fx-background-color: " + backgroundColor + ";");
         getColorStyle().setStyle("-fx-background-color: " + textColor + "; -fx-text-fill: " + backgroundColor + "; -fx-background-radius: 50");
-        outputDay.setStyle("-fx-text-fill: " + textColor + "; -fx-background-color: " + labelColor);
-        outputMonth.setStyle("-fx-text-fill: " + textColor + "; -fx-background-color: " + labelColor);
-        outputYear.setStyle("-fx-text-fill: " + textColor + "; -fx-background-color: " + labelColor);
+        outputDay.setStyle("-fx-text-fill: " + textColor + "; -fx-background-color: " + labelColor  + "; -fx-background-radius: 10");
+        outputMonth.setStyle("-fx-text-fill: " + textColor + "; -fx-background-color: " + labelColor + "; -fx-background-radius: 10");
+        outputYear.setStyle("-fx-text-fill: " + textColor + "; -fx-background-color: " + labelColor + "; -fx-background-radius: 10");
     }
 
     public DatePicker getStartDatePicker() {
