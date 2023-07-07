@@ -15,6 +15,8 @@ import java.io.IOException;
 
 public class UsualController {
     @FXML
+    private MenuItem dateCalc;
+    @FXML
     private MenuItem converterCalc;
     @FXML
     private MenuItem advancedCalc;
@@ -44,6 +46,8 @@ public class UsualController {
             setTypeCalcScene("/com/example/calculator/UsualCalc.fxml", 298, 537);
         } else if (event.getSource() == converterCalc) {
             setTypeCalcScene("/com/example/calculator/ConverterCalc.fxml", 298, 537);
+        } else if (event.getSource() == dateCalc) {
+            setTypeCalcScene("/com/example/calculator/DifferenceDateCalc.fxml", 298, 537);
         } else if (event.getSource() == systemNumberCalc) {
             setTypeCalcScene("/com/example/calculator/NumberSystem.fxml", 333, 629);
         }

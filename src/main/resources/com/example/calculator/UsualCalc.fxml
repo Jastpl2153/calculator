@@ -24,6 +24,7 @@
                         <MenuItem fx:id="usualCalc" mnemonicParsing="false" onAction="#typeCalc" text="Обычный" />
                         <MenuItem fx:id="advancedCalc" mnemonicParsing="false" onAction="#typeCalc" text="Продвинутый" />
                         <MenuItem fx:id="converterCalc" mnemonicParsing="false" onAction="#typeCalc" text="Конвертер" />
+                        <MenuItem fx:id="dateCalc" mnemonicParsing="false" onAction="#typeCalc" text="Вычисление даты" />
                         <MenuItem fx:id="systemNumberCalc" mnemonicParsing="false" onAction="#typeCalc" text="Система счисления" />
                      </items>
                   </MenuButton>
