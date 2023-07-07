@@ -25,6 +25,7 @@
                         <MenuItem fx:id="advancedCalc" mnemonicParsing="false" onAction="#typeCalc" text="Продвинутый" />
                         <MenuItem fx:id="converterCalc" mnemonicParsing="false" onAction="#typeCalc" text="Конвертер" />
                         <MenuItem fx:id="dateCalc" mnemonicParsing="false" onAction="#typeCalc" text="Вычисление даты" />
+                        <MenuItem fx:id="systemNumberCalc" mnemonicParsing="false" onAction="#typeCalc" text="Система счисления" />
                      </items>
                   </MenuButton>
                   <Button fx:id="colorStyle" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" minHeight="12.0" minWidth="21.0" mnemonicParsing="false" onAction="#style" prefHeight="27.0" prefWidth="54.0" style="-fx-background-color: white; -fx-background-radius: 50; -fx-text-fill: black;" text="White" textAlignment="CENTER">

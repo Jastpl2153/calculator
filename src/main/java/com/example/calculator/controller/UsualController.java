@@ -23,6 +23,8 @@ public class UsualController {
     @FXML
     private MenuItem usualCalc;
     @FXML
+    private MenuItem systemNumberCalc;
+    @FXML
     private VBox window;
     @FXML
     private Button colorStyle;
@@ -46,6 +48,8 @@ public class UsualController {
             setTypeCalcScene("/com/example/calculator/ConverterCalc.fxml", 298, 537);
         } else if (event.getSource() == dateCalc) {
             setTypeCalcScene("/com/example/calculator/DifferenceDateCalc.fxml", 298, 537);
+        } else if (event.getSource() == systemNumberCalc) {
+            setTypeCalcScene("/com/example/calculator/NumberSystem.fxml", 333, 629);
         }
     }
 
