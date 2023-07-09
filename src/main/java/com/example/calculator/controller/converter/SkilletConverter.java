@@ -34,7 +34,8 @@ public abstract class SkilletConverter extends ConverterController {
             double number = Double.parseDouble(getOutput().getText());
             double conversionFactor = getConversionFactor(getType().getText(), getType2().getText());
             double convertedValue = number * conversionFactor;
-            getResult().setText(String.valueOf(convertedValue));
+            String round = round(convertedValue);
+            getResult().setText(round);
         }
     }
 

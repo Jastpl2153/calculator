@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 
 public class UsualController {
     @FXML
@@ -89,7 +90,7 @@ public class UsualController {
 
     @FXML
     protected void processNumPad(ActionEvent event) {
-        if (start) {
+        if (start && !output.getText().equals("-")) {
             output.setText("");
             start = false;
         }
@@ -104,13 +105,19 @@ public class UsualController {
         }
         String value = ((Button) event.getSource()).getText();
         if (!value.equals("=")) {
-            if (!operation.isEmpty()) {
+            if (output.getText().isEmpty() && value.equals("-") && info.getText().isEmpty()){
+                output.setText("-");
                 return;
             }
-            operation = value;
-            info.setText(output.getText() + operation);
-            num = Double.parseDouble(output.getText());
-            output.setText("");
+            if (operation.isEmpty()) {
+                num = Double.parseDouble(output.getText());
+                operation = value;
+                info.setText(output.getText() + operation);
+                output.setText("");
+            } else {
+                operation = value;
+                info.setText(round(num) + operation);
+            }
         } else {
             if (operation.isEmpty() || output.getText().isEmpty() || output.getText().equals(".")) {
                 output.setText("ERROR");
@@ -118,7 +125,7 @@ public class UsualController {
             } else {
                 info.setText(info.getText() + output.getText());
                 String result = calculate(num, Double.parseDouble(output.getText()), operation);
-                rounding(result);
+                output.setText(round(Double.parseDouble(result)));
                 operation = "";
                 start = true;
             }
@@ -159,14 +166,10 @@ public class UsualController {
         }
     }
 
-    protected void rounding(String num) {
-        String regex = "-?\\d+\\.0*";
-        if (num.matches(regex)) {
-            long result = (long) Double.parseDouble(num);
-            output.setText(String.valueOf(result));
-        } else {
-            output.setText(num);
-        }
+    protected String round (double num) {
+        DecimalFormat decimalFormat = new DecimalFormat("#.######");
+        String formattedNumber = decimalFormat.format(num);
+        return formattedNumber;
     }
 
     @FXML

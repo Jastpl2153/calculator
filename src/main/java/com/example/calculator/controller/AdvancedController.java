@@ -80,8 +80,6 @@ public class AdvancedController extends UsualController{
                     numbers[i] = Double.parseDouble(numbersString[i]);
             }
             return numbers;
-        } else {
-            getOutput().setText("ERROR");
         }
         return null;
     }
@@ -120,10 +118,10 @@ public class AdvancedController extends UsualController{
             double num = Double.parseDouble(getOutput().getText());
             if (num > 0) {
                 num = -Math.abs(num);
-                rounding(String.valueOf(num));
+                getOutput().setText(round(num));
             } else {
                 num = Math.abs(num);
-                rounding(String.valueOf(num));
+                getOutput().setText(round(num));
             }
         }
     }
