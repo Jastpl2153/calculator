@@ -85,7 +85,7 @@ public class PlusAndMinusDateController extends DifferenceDateController {
     }
 
     @Override
-    protected void processNumPad(ActionEvent event) {
+    protected void handleProcessNumPad(ActionEvent event) {
         if (isStart()) {
             setStart(false);
         }

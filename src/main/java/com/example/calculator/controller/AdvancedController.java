@@ -15,7 +15,7 @@ public class AdvancedController extends UsualController{
     private boolean radOrDeg = true;
 
     @Override
-    protected void processOperation(ActionEvent event) {
+    protected void handleProcessOperation(ActionEvent event) {
         String outputText = getOutput().getText();
         double[] numbers = numberPattern(outputText);
 
@@ -33,7 +33,7 @@ public class AdvancedController extends UsualController{
             } else if (outputText.matches("ln \\d+(\\.\\d+)?")) {
                 getOutput().setText(String.valueOf(Math.log(numbers[0])));
             } else {
-                super.processOperation(event);
+                super.handleProcessOperation(event);
             }
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -57,7 +57,7 @@ public class AdvancedController extends UsualController{
     }
 
     @Override
-    protected void processNumPad(ActionEvent event) {
+    protected void handleProcessNumPad(ActionEvent event) {
         String buttonText = ((Button) event.getSource()).getText();
         String currentOutput = getOutput().getText();
 
@@ -65,7 +65,7 @@ public class AdvancedController extends UsualController{
             setStart(false);
             getOutput().setText(currentOutput + buttonText);
         } else {
-            super.processNumPad(event);
+            super.handleProcessNumPad(event);
         }
     }
 

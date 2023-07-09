@@ -42,8 +42,8 @@ public abstract class SkilletConverter extends ConverterController {
     protected abstract double getConversionFactor(String fromUnit, String toUnit);
 
     @Override
-    protected void processNumPad(ActionEvent event) {
-        super.processNumPad(event);
+    protected void handleProcessNumPad(ActionEvent event) {
+        super.handleProcessNumPad(event);
         converter();
     }
 

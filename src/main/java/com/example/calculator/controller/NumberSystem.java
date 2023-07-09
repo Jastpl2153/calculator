@@ -78,7 +78,7 @@ public class NumberSystem extends UsualController implements Initializable {
     }
 
     @Override
-    protected void processNumPad(ActionEvent event) {
+    protected void handleProcessNumPad(ActionEvent event) {
         if (isStart()) {
             outputHex.setText("");
             outputDec.setText("");
@@ -216,7 +216,7 @@ public class NumberSystem extends UsualController implements Initializable {
     }
 
     @Override
-    protected void processOperation(ActionEvent event) {
+    protected void handleProcessOperation(ActionEvent event) {
         String value = ((Button) event.getSource()).getText();
         if (!value.equals("=")) {
             if (!getOperation().isEmpty()) {
