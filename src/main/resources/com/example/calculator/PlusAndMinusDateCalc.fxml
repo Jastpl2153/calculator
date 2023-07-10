@@ -48,8 +48,8 @@
             </HBox>
             <MenuButton fx:id="nameMenu" mnemonicParsing="false" prefHeight="25.0" prefWidth="276.0" style="-fx-background-color: F29611;">
               <items>
-                <MenuItem fx:id="differenceBetweenDates" mnemonicParsing="false" onAction="#typeCalcDate" text="Разница между датами" />
-                <MenuItem fx:id="plusOrMinusDate" mnemonicParsing="false" onAction="#typeCalcDate" text="Добавить или вычесть дни" />
+                <MenuItem fx:id="differenceBetweenDates" mnemonicParsing="false" onAction="#handleTypeCalcDate" text="Разница между датами" />
+                <MenuItem fx:id="plusOrMinusDate" mnemonicParsing="false" onAction="#handleTypeCalcDate" text="Добавить или вычесть дни" />
               </items>
                <VBox.margin>
                   <Insets top="10.0" />
@@ -76,7 +76,7 @@
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
-                  <DatePicker fx:id="startDatePicker" onAction="#calculateDate" GridPane.columnIndex="1" />
+                  <DatePicker fx:id="startDatePicker" onAction="#handleCalculateDate" GridPane.columnIndex="1" />
                   <Label fx:id="outputDay" alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="175.0" style="-fx-background-color: #3E3E3E; -fx-background-radius: 10;" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <font>
                         <Font name="Arial" size="24.0" />
@@ -161,12 +161,12 @@
                   <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button mnemonicParsing="false" onAction="#cleanOutput" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 30; -fx-background-color: #ACACAC;" text="AC" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                  <Button mnemonicParsing="false" onAction="#handleCleanOutput" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 30; -fx-background-color: #ACACAC;" text="AC" GridPane.columnIndex="3" GridPane.rowIndex="3">
                      <font>
                         <Font name="Arial" size="19.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#erase" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 30; -fx-background-color: #ACACAC;" text="⌫" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                  <Button mnemonicParsing="false" onAction="#handleErase" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 30; -fx-background-color: #ACACAC;" text="⌫" GridPane.columnIndex="3" GridPane.rowIndex="2">
                      <font>
                         <Font name="Arial" size="19.0" />
                      </font>

@@ -139,7 +139,7 @@ public class UsualController {
     }
 
     @FXML
-    protected void cleanOutput(ActionEvent event) {
+    protected void handleCleanOutput(ActionEvent event) {
         output.setText("");
         info.setText("");
         start = true;
@@ -178,7 +178,7 @@ public class UsualController {
     }
 
     @FXML
-    protected void erase(ActionEvent event) {
+    protected void handleErase(ActionEvent event) {
         String text = output.getText();
         if (text.length() > 0) {
             text = text.substring(0, text.length() - 1);
@@ -186,16 +186,13 @@ public class UsualController {
         }
     }
 
-    private void setTypeCalcScene(String fxmlPath, double width, double height) {
+    protected void setTypeCalcScene(String fxmlPath, double width, double height) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
             Scene scene = new Scene(root, width, height);
             Stage stage = (Stage) window.getScene().getWindow();
             stage.setScene(scene);
-
-            UsualController controller = loader.getController();
-            controller.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();
         }

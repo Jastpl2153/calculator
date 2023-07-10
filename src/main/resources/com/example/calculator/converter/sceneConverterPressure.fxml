@@ -109,12 +109,12 @@
                   <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button mnemonicParsing="false" onAction="#cleanOutput" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 30; -fx-background-color: #ACACAC;" text="AC" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                  <Button mnemonicParsing="false" onAction="#handleCleanOutput" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 30; -fx-background-color: #ACACAC;" text="AC" GridPane.columnIndex="4" GridPane.rowIndex="1">
                      <font>
                         <Font name="Arial" size="19.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#erase" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 30; -fx-background-color: #ACACAC;" text="⌫" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                  <Button mnemonicParsing="false" onAction="#handleErase" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 30; -fx-background-color: #ACACAC;" text="⌫" GridPane.columnIndex="4" GridPane.rowIndex="2">
                      <font>
                         <Font name="Arial" size="19.0" />
                      </font>

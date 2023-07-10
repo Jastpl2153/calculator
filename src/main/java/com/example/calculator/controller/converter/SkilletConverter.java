@@ -51,14 +51,15 @@ public abstract class SkilletConverter extends ConverterController {
     }
 
     @Override
-    protected void cleanOutput(ActionEvent event) {
+    protected void handleCleanOutput(ActionEvent event) {
         result.setText("");
         getOutput().setText("");
+        setStart(true);
     }
 
     @Override
-    protected void erase(ActionEvent event) {
-        super.erase(event);
+    protected void handleErase(ActionEvent event) {
+        super.handleErase(event);
         if (getOutput().getText().isEmpty()){
             result.setText("");
         }

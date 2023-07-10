@@ -155,7 +155,7 @@ public class NumberSystem extends UsualController implements Initializable {
         }
     }
     @Override
-    protected void cleanOutput(ActionEvent event) {
+    protected void handleCleanOutput(ActionEvent event) {
         outputBin.setText("");
         outputDec.setText("");
         outputHex.setText("");
@@ -165,7 +165,7 @@ public class NumberSystem extends UsualController implements Initializable {
         setStart(true);
     }
     @Override
-    protected void erase(ActionEvent event) {
+    protected void handleErase(ActionEvent event) {
         if (output != null) {
             String text = output.getText();
             if (text.length() > 0) {
@@ -174,7 +174,7 @@ public class NumberSystem extends UsualController implements Initializable {
                 if (!output.getText().isEmpty()) {
                     calculateSystemNumber();
                 } else {
-                    cleanOutput(event);
+                    handleCleanOutput(event);
                 }
             }
         }
