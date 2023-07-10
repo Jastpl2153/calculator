@@ -11,6 +11,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Controller for selecting the converter type
+ */
+
 public class ConverterController extends UsualController {
     @FXML
     void typeConverter(ActionEvent event) {
@@ -67,6 +71,7 @@ public class ConverterController extends UsualController {
         }
     }
 
+    //TODO: Подумать об отдельном классе.
     @Override
     void style(ActionEvent event) {
             String backgroundColor;
@@ -82,10 +87,5 @@ public class ConverterController extends UsualController {
 
             getWindow().setStyle("-fx-background-color: " + backgroundColor + ";");
             getColorStyle().setStyle("-fx-background-color: " + textColor + "; -fx-text-fill: " + backgroundColor + "; -fx-background-radius: 50");
-    }
-
-    @Override
-    protected void cleanOutput(ActionEvent event) {
-        getOutput().setText("");
     }
 }
