@@ -108,7 +108,7 @@ public class UsualController {
         }
     }
 
-    private void handleNonEqualsOperation(String value) {
+    protected void handleNonEqualsOperation(String value) {
         if (output.getText().isEmpty() && value.equals("-") && info.getText().isEmpty()) {
             output.setText("-");
             return;
@@ -126,7 +126,7 @@ public class UsualController {
         output.setText("");
     }
 
-    private void handleEqualsOperation() {
+    protected void handleEqualsOperation() {
         if (operation.isEmpty() || output.getText().isEmpty() || output.getText().equals(".")) {
             output.setText("ERROR");
             operation = "";
