@@ -1,5 +1,6 @@
 package com.example.calculator.controller;
 
+import com.example.calculator.controller.styles.Styles;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,21 +15,29 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.text.DecimalFormat;
 
+/**
+ * Basic controller for a regular calculator.
+ * Also a parent class for other types of calculators.
+ */
+
 public class UsualController {
     @FXML
-    private MenuItem dateCalc;
-    @FXML
-    private MenuItem converterCalc;
-    @FXML
-    private MenuItem advancedCalc;
+    private VBox window;
+
     @FXML
     private MenuItem usualCalc;
     @FXML
-    private MenuItem systemNumberCalc;
+    private MenuItem advancedCalc;
     @FXML
-    private VBox window;
+    private MenuItem converterCalc;
+    @FXML
+    private MenuItem dateCalc;
+    @FXML
+    private MenuItem systemNumberCalc;
+
     @FXML
     private Button colorStyle;
+
     @FXML
     private Label info;
     @FXML
@@ -40,11 +49,11 @@ public class UsualController {
     private boolean start = true;
 
     @FXML
-    protected void typeCalc(ActionEvent event) {
-        if (event.getSource() == advancedCalc) {
-            setTypeCalcScene("/com/example/calculator/AdvancedCalc.fxml", 333, 629);
-        } else if (event.getSource() == usualCalc) {
+    protected void handleTypeCalc(ActionEvent event) {
+        if (event.getSource() == usualCalc) {
             setTypeCalcScene("/com/example/calculator/UsualCalc.fxml", 298, 537);
+        } else if (event.getSource() == advancedCalc) {
+            setTypeCalcScene("/com/example/calculator/AdvancedCalc.fxml", 333, 629);
         } else if (event.getSource() == converterCalc) {
             setTypeCalcScene("/com/example/calculator/ConverterCalc.fxml", 298, 537);
         } else if (event.getSource() == dateCalc) {
@@ -54,42 +63,17 @@ public class UsualController {
         }
     }
 
-    private void setTypeCalcScene(String fxmlPath, double width, double height) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            Parent root = loader.load();
-            Scene scene = new Scene(root, width, height);
-            Stage stage = (Stage) window.getScene().getWindow();
-            stage.setScene(scene);
-
-            UsualController controller = loader.getController();
-            controller.setScene(scene);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     @FXML
     void style(ActionEvent event) {
-        String backgroundColor;
-        String textColor;
-
-        if (window.getStyle().equals("-fx-background-color: #111111;")) {
-            backgroundColor = "white";
-            textColor = "#111111";
+        if (window.getStyle().equals("-fx-background-color: " + Styles.COLOR_BLACK + ";")) {
+            Styles.applyLightStyle(window, colorStyle, output, info);
         } else {
-            backgroundColor = "#111111";
-            textColor = "white";
+            Styles.applyDarkStyle(window, colorStyle, output, info);
         }
-
-        window.setStyle("-fx-background-color: " + backgroundColor + ";");
-        colorStyle.setStyle("-fx-background-color: " + textColor + "; -fx-text-fill: " + backgroundColor + "; -fx-background-radius: 50");
-        output.setStyle("-fx-text-fill: " + textColor + ";");
-        info.setStyle("-fx-text-fill: " + textColor + ";");
     }
 
     @FXML
-    protected void processNumPad(ActionEvent event) {
+    protected void handleProcessNumPad(ActionEvent event) {
         if (start && !output.getText().equals("-")) {
             output.setText("");
             start = false;
@@ -99,41 +83,52 @@ public class UsualController {
     }
 
     @FXML
-    protected void processOperation(ActionEvent event) {
+    protected void handleProcessOperation(ActionEvent event) {
         if (output.getText().equals("ERROR")) {
             return;
         }
+
         String value = ((Button) event.getSource()).getText();
+
         if (!value.equals("=")) {
-            if (output.getText().isEmpty() && value.equals("-") && info.getText().isEmpty()){
-                output.setText("-");
-                return;
-            }
-            if (operation.isEmpty()) {
-                num = Double.parseDouble(output.getText());
-                operation = value;
-                info.setText(output.getText() + operation);
-                output.setText("");
-            } else {
-                operation = value;
-                info.setText(round(num) + operation);
-            }
+            handleNonEqualsOperation(value);
         } else {
-            if (operation.isEmpty() || output.getText().isEmpty() || output.getText().equals(".")) {
-                output.setText("ERROR");
-                operation = "";
-            } else {
-                info.setText(info.getText() + output.getText());
-                String result = calculate(num, Double.parseDouble(output.getText()), operation);
-                output.setText(round(Double.parseDouble(result)));
-                operation = "";
-                start = true;
-            }
+            handleEqualsOperation();
+        }
+    }
+
+    protected void handleNonEqualsOperation(String value) {
+        if (output.getText().isEmpty() && value.equals("-") && info.getText().isEmpty()) {
+            output.setText("-");
+            return;
+        }
+
+        if (operation.isEmpty()) {
+            num = Double.parseDouble(output.getText());
+            operation = value;
+        } else {
+            operation = value;
+            info.setText(round(num) + operation);
+        }
+
+        info.setText(output.getText() + operation);
+        output.setText("");
+    }
+
+    protected void handleEqualsOperation() {
+        if (operation.isEmpty() || output.getText().isEmpty() || output.getText().equals(".")) {
+            output.setText("ERROR");
+            operation = "";
+        } else {
+            info.setText(info.getText() + output.getText());
+            output.setText(round(Double.parseDouble(calculate(num, Double.parseDouble(output.getText()), operation))));
+            operation = "";
+            start = true;
         }
     }
 
     @FXML
-    protected void cleanOutput(ActionEvent event) {
+    protected void handleCleanOutput(ActionEvent event) {
         output.setText("");
         info.setText("");
         start = true;
@@ -166,20 +161,33 @@ public class UsualController {
         }
     }
 
-    protected String round (double num) {
+    protected String round(double num) {
         DecimalFormat decimalFormat = new DecimalFormat("#.######");
-        String formattedNumber = decimalFormat.format(num);
-        return formattedNumber;
+        return decimalFormat.format(num);
     }
 
     @FXML
-    protected void erase(ActionEvent event) {
+    protected void handleErase(ActionEvent event) {
         String text = output.getText();
         if (text.length() > 0) {
             text = text.substring(0, text.length() - 1);
             output.setText(text);
         }
     }
+
+    protected void setTypeCalcScene(String fxmlPath, double width, double height) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root = loader.load();
+            Scene scene = new Scene(root, width, height);
+            Stage stage = (Stage) window.getScene().getWindow();
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // getter and setter
 
     public Label getOutput() {
         return output;
@@ -225,24 +233,12 @@ public class UsualController {
         return info;
     }
 
-    public void setInfo(Label info) {
-        this.info = info;
-    }
-
     public Scene getScene() {
         return scene;
     }
 
     public void setScene(Scene scene) {
         this.scene = scene;
-    }
-
-    public double getNum() {
-        return num;
-    }
-
-    public void setNum(double num) {
-        this.num = num;
     }
 
     public String getOperation() {

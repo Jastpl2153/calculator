@@ -1,5 +1,6 @@
 package com.example.calculator.controller;
 
+import com.example.calculator.controller.styles.Styles;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -8,13 +9,14 @@ import javafx.scene.control.ToggleButton;
 
 import java.time.LocalDate;
 
+/**
+ * Controller class for calculating the date
+ */
 public class PlusAndMinusDateController extends DifferenceDateController {
     @FXML
     private ToggleButton day;
-
     @FXML
     private ToggleButton month;
-
     @FXML
     private ToggleButton year;
 
@@ -22,17 +24,16 @@ public class PlusAndMinusDateController extends DifferenceDateController {
     private Label result;
 
     @FXML
+    private ToggleButton plus;
+    @FXML
     private ToggleButton minus;
 
     @FXML
-    private ToggleButton plus;
-
-    private ToggleButton active;
-    @FXML
     private Label labelAdd;
-
     @FXML
     private Label labelResult;
+
+    private ToggleButton active;
     private Label output = new Label("");
     private ToggleButton[] toggleButtons = new ToggleButton[3];
 
@@ -44,53 +45,61 @@ public class PlusAndMinusDateController extends DifferenceDateController {
         toggleButtons[2] = year;
     }
 
+    @Override
+    void handleCalculateDate(ActionEvent event) {
+        LocalDate startDate = getStartDatePicker().getValue();
+
+        if (startDate != null) {
+            long countD = parseLongOrDefault(getOutputDay().getText());
+            long countM = parseLongOrDefault(getOutputMonth().getText());
+            long countY = parseLongOrDefault(getOutputYear().getText());
+
+            if (plus.isSelected()) {
+                startDate = startDate.plusDays(countD).plusMonths(countM).plusYears(countY);
+            } else if (minus.isSelected()) {
+                startDate = startDate.minusDays(countD).minusMonths(countM).minusYears(countY);
+            }
+
+            result.setText(String.valueOf(startDate));
+        }
+    }
+
+    long parseLongOrDefault(String text) {
+        try {
+            return Long.parseLong(text);
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+    }
+
     @FXML
-    void buttonAction(ActionEvent event) {
+    void handleToggleButtons(ActionEvent event) {
         ToggleButton action = (ToggleButton) event.getSource();
         for (ToggleButton a : toggleButtons) {
             if (a == action) {
                 a.setSelected(true);
                 a.setDisable(true);
-                action.setStyle("-fx-background-color:  F29611; -fx-background-radius: 10; -fx-opacity: 1;");
+                Styles.applyActiveStyle(a);
                 active = getActionButton();
                 output = getLabelOutput(active);
             } else {
                 a.setSelected(false);
                 a.setDisable(false);
-                a.setStyle("-fx-background-color:  #ACACAC; -fx-background-radius: 10");
+                Styles.applyInactiveStyle(a);
             }
         }
     }
 
-    private Label getLabelOutput(ToggleButton active){
-        if (active.isSelected()) {
-            if (active.equals(day)) {
-                return getOutputDay();
-            } else if (active.equals(month)) {
-                return getOutputMonth();
-            } else if (active.equals(year)) {
-                return getOutputYear();
-            }
-        }
-        return null;
-    }
-
-    private ToggleButton getActionButton(){
-        for (ToggleButton a : toggleButtons) {
-            if (a.isSelected()){
-                return a;
-            }
-        }
-        return null;
-    }
 
     @Override
-    protected void processNumPad(ActionEvent event) {
+    protected void handleProcessNumPad(ActionEvent event) {
         if (isStart()) {
             setStart(false);
         }
+
         if (trueActive()) {
             String value = ((Button) event.getSource()).getText();
+
             if (day.isSelected()) {
                 getOutputDay().setText(getOutputDay().getText() + value);
             } else if (month.isSelected()) {
@@ -98,7 +107,54 @@ public class PlusAndMinusDateController extends DifferenceDateController {
             } else if (year.isSelected()) {
                 getOutputYear().setText(getOutputYear().getText() + value);
             }
-            calculateDate(event);
+
+            handleCalculateDate(event);
+        }
+    }
+
+    @Override
+    protected void handleCleanOutput(ActionEvent event) {
+        getOutputDay().setText("");
+        getOutputMonth().setText("");
+        getOutputYear().setText("");
+        result.setText("");
+        setStart(true);
+    }
+
+    @Override
+    protected void handleErase(ActionEvent event) {
+        if (output != null && output.getText().length() > 0) {
+            String text = output.getText().substring(0, output.getText().length() - 1);
+            output.setText(text);
+
+            if (!getOutputDay().getText().isEmpty() || !getOutputMonth().getText().isEmpty() || !getOutputYear().getText().isEmpty()) {
+                handleCalculateDate(event);
+            }
+        }
+    }
+
+    @FXML
+    void handleActionOperation(ActionEvent event) {
+        ToggleButton selectedButton = (ToggleButton) event.getSource();
+        ToggleButton otherButton = (selectedButton == plus) ? minus : plus;
+
+        selectedButton.setSelected(true);
+        selectedButton.setDisable(true);
+        Styles.applyActiveStyle(selectedButton);
+
+        otherButton.setSelected(false);
+        otherButton.setDisable(false);
+        Styles.applyInactiveStyle(otherButton);
+
+        handleCalculateDate(event);
+    }
+
+    @Override
+    void style(ActionEvent event) {
+        if (getWindow().getStyle().equals("-fx-background-color: #111111;")) {
+            Styles.applyLightStyle(getWindow(), getColorStyle(), getLabelStart(), labelAdd, labelResult);
+        } else {
+            Styles.applyDarkStyle(getWindow(), getColorStyle(), getLabelStart(), labelAdd, labelResult);
         }
     }
 
@@ -111,114 +167,25 @@ public class PlusAndMinusDateController extends DifferenceDateController {
         return false;
     }
 
-    @Override
-    protected void cleanOutput(ActionEvent event) {
-        getOutputDay().setText("");
-        getOutputMonth().setText("");
-        getOutputYear().setText("");
-        result.setText("");
-        getOutputDay().setText("");
-        getOutputMonth().setText("");
-        getOutputYear().setText("");
-        setStart(true);
-    }
-
-    @Override
-    protected void erase(ActionEvent event) {
-        if (output != null) {
-            String text = output.getText();
-            if (text.length() > 0) {
-                text = text.substring(0, text.length() - 1);
-                output.setText(text);
-                if (!getOutputDay().getText().isEmpty() || !getOutputMonth().getText().isEmpty() || !getOutputYear().getText().isEmpty()){
-                    calculateDate(event);
-                }
+    private Label getLabelOutput(ToggleButton active) {
+        if (active.isSelected()) {
+            if (active.equals(day)) {
+                return getOutputDay();
+            } else if (active.equals(month)) {
+                return getOutputMonth();
+            } else if (active.equals(year)) {
+                return getOutputYear();
             }
         }
+        return null;
     }
 
-    @FXML
-    void actionOperation(ActionEvent event) {
-        if (plus == event.getSource()) {
-            plus.setSelected(true);
-            plus.setDisable(true);
-            plus.setStyle("-fx-background-color:  F29611; -fx-background-radius: 10; -fx-opacity: 1;");
-            minus.setSelected(false);
-            minus.setDisable(false);
-            minus.setStyle("-fx-background-color:  #ACACAC; -fx-background-radius: 10");
-            calculateDate(event);
-        } else {
-            minus.setSelected(true);
-            minus.setDisable(true);
-            minus.setStyle("-fx-background-color:  F29611; -fx-background-radius: 10; -fx-opacity: 1;");
-            plus.setSelected(false);
-            plus.setDisable(false);
-            plus.setStyle("-fx-background-color:  #ACACAC; -fx-background-radius: 10");
-            calculateDate(event);
-        }
-
-    }
-
-    @Override
-    void calculateDate(ActionEvent event) {
-        if (getStartDatePicker().getValue() != null && (!getOutputDay().getText().isEmpty() || !getOutputMonth().getText().isEmpty() || !getOutputYear().getText().isEmpty())) {
-            LocalDate startDate = getStartDatePicker().getValue();
-            long countD;
-            long countM;
-            long countY;
-            if (plus.isSelected()) {
-                if (getOutputDay() != null && !getOutputDay().getText().isEmpty()) {
-                    countD = Long.parseLong(getOutputDay().getText());
-                    startDate = startDate.plusDays(countD);
-                    result.setText(String.valueOf(startDate));
-                }
-                if (getOutputMonth() != null && !getOutputMonth().getText().isEmpty()) {
-                    countM = Long.parseLong(getOutputMonth().getText());
-                    startDate = startDate.plusMonths(countM);
-                    result.setText(String.valueOf(startDate));
-                }
-                if (getOutputYear() != null && !getOutputYear().getText().isEmpty()){
-                    countY = Long.parseLong(getOutputYear().getText());
-                    startDate = startDate.plusYears(countY);
-                    result.setText(String.valueOf(startDate));
-                }
-            } else if (minus.isSelected()) {
-                if (getOutputDay() != null && !getOutputDay().getText().isEmpty()) {
-                    countD = Long.parseLong(getOutputDay().getText());
-                    startDate = startDate.minusDays(countD);
-                    result.setText(String.valueOf(startDate));
-                }
-                if (getOutputMonth() != null && !getOutputMonth().getText().isEmpty()) {
-                    countM = Long.parseLong(getOutputMonth().getText());
-                    startDate = startDate.minusMonths(countM);
-                    result.setText(String.valueOf(startDate));
-                }
-                if (getOutputYear() != null && !getOutputYear().getText().isEmpty()){
-                    countY = Long.parseLong(getOutputYear().getText());
-                    startDate = startDate.minusYears(countY);
-                    result.setText(String.valueOf(startDate));
-                }
+    private ToggleButton getActionButton() {
+        for (ToggleButton a : toggleButtons) {
+            if (a.isSelected()) {
+                return a;
             }
         }
-    }
-
-    @Override
-    void style(ActionEvent event) {
-        String backgroundColor;
-        String textColor;
-
-        if (getWindow().getStyle().equals("-fx-background-color: #111111;")) {
-            backgroundColor = "white";
-            textColor = "#111111";
-        } else {
-            backgroundColor = "#111111";
-            textColor = "white";
-        }
-
-        getLabelStart().setStyle("-fx-text-fill: " + textColor + ";");
-        labelAdd.setStyle("-fx-text-fill: " + textColor + ";");
-        labelResult.setStyle("-fx-text-fill: " + textColor + ";");
-        getWindow().setStyle("-fx-background-color: " + backgroundColor + ";");
-        getColorStyle().setStyle("-fx-background-color: " + textColor + "; -fx-text-fill: " + backgroundColor + "; -fx-background-radius: 50");
+        return null;
     }
 }

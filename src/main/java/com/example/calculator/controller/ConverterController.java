@@ -1,5 +1,6 @@
 package com.example.calculator.controller;
 
+import com.example.calculator.controller.styles.Styles;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,51 +12,44 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Controller for selecting the converter type
+ */
+
 public class ConverterController extends UsualController {
     @FXML
-    void typeConverter(ActionEvent event) {
+    void handleTypeConverter(ActionEvent event) {
         String converter = ((Button) event.getSource()).getText();
         switch (converter) {
             case " \uD83D\uDCCF  Длина" -> {
-                setTypeCalcScene("/com/example/calculator/converter/sceneConverterLength.fxml");
+                setTypeCalcScene("/com/example/calculator/converter/sceneConverterLength.fxml", 298, 537);
             }
             case "⛶ Площаль" -> {
-                setTypeCalcScene("/com/example/calculator/converter/sceneConverterSquare.fxml");
+                setTypeCalcScene("/com/example/calculator/converter/sceneConverterSquare.fxml", 298, 537);
             }
             case " ㎏  Масса" -> {
-                setTypeCalcScene("/com/example/calculator/converter/sceneConverterWeight.fxml");
+                setTypeCalcScene("/com/example/calculator/converter/sceneConverterWeight.fxml", 298, 537);
             }
             case "℃ Тем-ра" -> {
-                setTypeCalcScene("/com/example/calculator/converter/sceneConverterTemperature.fxml");
+                setTypeCalcScene("/com/example/calculator/converter/sceneConverterTemperature.fxml", 298, 537);
             }
             case "㎧ Скорость" -> {
-                setTypeCalcScene("/com/example/calculator/converter/sceneConverterSpeed.fxml");
+                setTypeCalcScene("/com/example/calculator/converter/sceneConverterSpeed.fxml", 298, 537);
             }
             case "㍴ Давление" -> {
-                setTypeCalcScene("/com/example/calculator/converter/sceneConverterPressure.fxml");
+                setTypeCalcScene("/com/example/calculator/converter/sceneConverterPressure.fxml", 298, 537);
             }
             case "㎺ Мощность" -> {
-                setTypeCalcScene("/com/example/calculator/converter/sceneConverterPower.fxml");
+                setTypeCalcScene("/com/example/calculator/converter/sceneConverterPower.fxml", 298, 537);
             }
             case "㎦  Объем" -> {
-                setTypeCalcScene("/com/example/calculator/converter/sceneConverterVolume.fxml");
+                setTypeCalcScene("/com/example/calculator/converter/sceneConverterVolume.fxml", 298, 537);
             }
         }
     }
 
-    private void setTypeCalcScene(String fxmlPath) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) getWindow().getScene().getWindow();
-            stage.setScene(scene);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
     @FXML
-    void back(ActionEvent event) {
+    void handleBack(ActionEvent event) {
         try {
             Parent newRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource
                     ("/com/example/calculator/ConverterCalc.fxml")));
@@ -69,23 +63,10 @@ public class ConverterController extends UsualController {
 
     @Override
     void style(ActionEvent event) {
-            String backgroundColor;
-            String textColor;
-
-            if (getWindow().getStyle().equals("-fx-background-color: #111111;")) {
-                backgroundColor = "white";
-                textColor = "#111111";
-            } else {
-                backgroundColor = "#111111";
-                textColor = "white";
-            }
-
-            getWindow().setStyle("-fx-background-color: " + backgroundColor + ";");
-            getColorStyle().setStyle("-fx-background-color: " + textColor + "; -fx-text-fill: " + backgroundColor + "; -fx-background-radius: 50");
-    }
-
-    @Override
-    protected void cleanOutput(ActionEvent event) {
-        getOutput().setText("");
+        if (getWindow().getStyle().equals("-fx-background-color: " + Styles.COLOR_BLACK + ";")) {
+            Styles.applyLightStyle(getWindow(), getColorStyle());
+        } else {
+            Styles.applyDarkStyle(getWindow(), getColorStyle());
+        }
     }
 }

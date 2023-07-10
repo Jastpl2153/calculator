@@ -7,13 +7,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 
+/**
+ * Parent class for other conversion types
+ */
+
 public abstract class SkilletConverter extends ConverterController {
     @FXML
     private Label result;
 
     @FXML
     private MenuButton type;
-
     @FXML
     private MenuButton type2;
 
@@ -42,26 +45,28 @@ public abstract class SkilletConverter extends ConverterController {
     protected abstract double getConversionFactor(String fromUnit, String toUnit);
 
     @Override
-    protected void processNumPad(ActionEvent event) {
-        super.processNumPad(event);
+    protected void handleProcessNumPad(ActionEvent event) {
+        super.handleProcessNumPad(event);
         converter();
     }
 
     @Override
-    protected void cleanOutput(ActionEvent event) {
+    protected void handleCleanOutput(ActionEvent event) {
         result.setText("");
-        super.cleanOutput(event);
+        getOutput().setText("");
+        setStart(true);
     }
 
     @Override
-    protected void erase(ActionEvent event) {
-        super.erase(event);
+    protected void handleErase(ActionEvent event) {
+        super.handleErase(event);
         if (getOutput().getText().isEmpty()){
             result.setText("");
         }
         converter();
     }
 
+    // getter
     public Label getResult() {
         return result;
     }
