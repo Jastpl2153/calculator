@@ -182,27 +182,27 @@
                         <Font name="Arial" size="19.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#textOperationProcess" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 30; -fx-background-color: #ACACAC;" text="!" GridPane.rowIndex="3">
+                  <Button mnemonicParsing="false" onAction="#handleTextOperation" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 30; -fx-background-color: #ACACAC;" text="!" GridPane.rowIndex="3">
                      <font>
                         <Font name="Arial" size="19.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#textOperationProcess" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 30; -fx-background-color: #ACACAC;" text="√" GridPane.rowIndex="2">
+                  <Button mnemonicParsing="false" onAction="#handleTextOperation" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 30; -fx-background-color: #ACACAC;" text="√" GridPane.rowIndex="2">
                      <font>
                         <Font name="Arial" size="19.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#textOperationProcess" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 30; -fx-background-color: #ACACAC;" text="^" GridPane.rowIndex="1">
+                  <Button mnemonicParsing="false" onAction="#handleTextOperation" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 30; -fx-background-color: #ACACAC;" text="^" GridPane.rowIndex="1">
                      <font>
                         <Font name="Arial" size="19.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#textOperationProcess" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 30; -fx-background-color: #ACACAC;" text="ln" GridPane.columnIndex="1">
+                  <Button mnemonicParsing="false" onAction="#handleTextOperation" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 30; -fx-background-color: #ACACAC;" text="ln" GridPane.columnIndex="1">
                      <font>
                         <Font name="Arial" size="19.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#textOperationProcess" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 30; -fx-background-color: #ACACAC;" text="log">
+                  <Button mnemonicParsing="false" onAction="#handleTextOperation" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 30; -fx-background-color: #ACACAC;" text="log">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
