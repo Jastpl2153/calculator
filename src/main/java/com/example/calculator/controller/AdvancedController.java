@@ -9,6 +9,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Advanced calculator controller.
+ * Also has the functions of a regular calculator.
+ */
+
 public class AdvancedController extends UsualController{
     @FXML
     private Button deg;
