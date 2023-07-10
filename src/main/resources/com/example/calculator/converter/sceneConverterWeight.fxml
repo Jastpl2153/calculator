@@ -41,7 +41,7 @@
                   <Insets />
                </opaqueInsets>
             </HBox>
-            <Button alignment="CENTER" maxHeight="20.0" maxWidth="45.0" mnemonicParsing="false" onAction="#back" prefHeight="20.0" prefWidth="45.0" style="-fx-background-color: F29611;" text="🢤">
+            <Button alignment="CENTER" maxHeight="20.0" maxWidth="45.0" mnemonicParsing="false" onAction="#handleBack" prefHeight="20.0" prefWidth="45.0" style="-fx-background-color: F29611;" text="🢤">
                <VBox.margin>
                   <Insets right="213.0" />
                </VBox.margin>

@@ -17,49 +17,38 @@ import java.util.Objects;
 
 public class ConverterController extends UsualController {
     @FXML
-    void typeConverter(ActionEvent event) {
+    void handleTypeConverter(ActionEvent event) {
         String converter = ((Button) event.getSource()).getText();
         switch (converter) {
             case " \uD83D\uDCCF  Длина" -> {
-                setTypeCalcScene("/com/example/calculator/converter/sceneConverterLength.fxml");
+                setTypeCalcScene("/com/example/calculator/converter/sceneConverterLength.fxml", 298, 537);
             }
             case "⛶ Площаль" -> {
-                setTypeCalcScene("/com/example/calculator/converter/sceneConverterSquare.fxml");
+                setTypeCalcScene("/com/example/calculator/converter/sceneConverterSquare.fxml", 298, 537);
             }
             case " ㎏  Масса" -> {
-                setTypeCalcScene("/com/example/calculator/converter/sceneConverterWeight.fxml");
+                setTypeCalcScene("/com/example/calculator/converter/sceneConverterWeight.fxml", 298, 537);
             }
             case "℃ Тем-ра" -> {
-                setTypeCalcScene("/com/example/calculator/converter/sceneConverterTemperature.fxml");
+                setTypeCalcScene("/com/example/calculator/converter/sceneConverterTemperature.fxml", 298, 537);
             }
             case "㎧ Скорость" -> {
-                setTypeCalcScene("/com/example/calculator/converter/sceneConverterSpeed.fxml");
+                setTypeCalcScene("/com/example/calculator/converter/sceneConverterSpeed.fxml", 298, 537);
             }
             case "㍴ Давление" -> {
-                setTypeCalcScene("/com/example/calculator/converter/sceneConverterPressure.fxml");
+                setTypeCalcScene("/com/example/calculator/converter/sceneConverterPressure.fxml", 298, 537);
             }
             case "㎺ Мощность" -> {
-                setTypeCalcScene("/com/example/calculator/converter/sceneConverterPower.fxml");
+                setTypeCalcScene("/com/example/calculator/converter/sceneConverterPower.fxml", 298, 537);
             }
             case "㎦  Объем" -> {
-                setTypeCalcScene("/com/example/calculator/converter/sceneConverterVolume.fxml");
+                setTypeCalcScene("/com/example/calculator/converter/sceneConverterVolume.fxml", 298, 537);
             }
         }
     }
 
-    private void setTypeCalcScene(String fxmlPath) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) getWindow().getScene().getWindow();
-            stage.setScene(scene);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
     @FXML
-    void back(ActionEvent event) {
+    void handleBack(ActionEvent event) {
         try {
             Parent newRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource
                     ("/com/example/calculator/ConverterCalc.fxml")));
