@@ -1,5 +1,6 @@
 package com.example.calculator.controller;
 
+import com.example.calculator.controller.styles.Styles;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -60,21 +61,12 @@ public class ConverterController extends UsualController {
         }
     }
 
-    //TODO: Подумать об отдельном классе.
     @Override
     void style(ActionEvent event) {
-            String backgroundColor;
-            String textColor;
-
-            if (getWindow().getStyle().equals("-fx-background-color: #111111;")) {
-                backgroundColor = "white";
-                textColor = "#111111";
-            } else {
-                backgroundColor = "#111111";
-                textColor = "white";
-            }
-
-            getWindow().setStyle("-fx-background-color: " + backgroundColor + ";");
-            getColorStyle().setStyle("-fx-background-color: " + textColor + "; -fx-text-fill: " + backgroundColor + "; -fx-background-radius: 50");
+        if (getWindow().getStyle().equals("-fx-background-color: " + Styles.COLOR_BLACK + ";")) {
+            Styles.applyLightStyle(getWindow(), getColorStyle());
+        } else {
+            Styles.applyDarkStyle(getWindow(), getColorStyle());
+        }
     }
 }

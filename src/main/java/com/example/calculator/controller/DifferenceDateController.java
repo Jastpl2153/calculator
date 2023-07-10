@@ -1,5 +1,6 @@
 package com.example.calculator.controller;
 
+import com.example.calculator.controller.styles.Styles;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -81,34 +82,15 @@ public class DifferenceDateController extends UsualController  {
         }
     }
 
-    //TODO: переработать.
     @Override
     void style(ActionEvent event) {
-        String backgroundColor;
-        String textColor;
-        String labelColor;
-
-        if (getWindow().getStyle().equals("-fx-background-color: #111111;")) {
-            backgroundColor = "white";
-            textColor = "#111111";
-            labelColor = "F29611";
+        if (getWindow().getStyle().equals("-fx-background-color: " + Styles.COLOR_BLACK + ";")) {
+            Styles.applyLightStyle(getWindow(), getColorStyle(), outputDay, outputMonth, outputYear,
+                    labelDay, labelMonth, labelYear, labelStart, labelEnd, labelPeriod);
         } else {
-            backgroundColor = "#111111";
-            textColor = "white";
-            labelColor = " #3E3E3E";
+            Styles.applyDarkStyle(getWindow(), getColorStyle(), outputDay, outputMonth, outputYear,
+                    labelDay, labelMonth, labelYear, labelStart, labelEnd, labelPeriod);
         }
-
-        labelDay.setStyle("-fx-text-fill: " + textColor + ";");
-        labelMonth.setStyle("-fx-text-fill: " + textColor + ";");
-        labelYear.setStyle("-fx-text-fill: " + textColor + ";");
-        labelStart.setStyle("-fx-text-fill: " + textColor + ";");
-        labelEnd.setStyle("-fx-text-fill: " + textColor + ";");
-        labelPeriod.setStyle("-fx-text-fill: " + textColor + ";");
-        getWindow().setStyle("-fx-background-color: " + backgroundColor + ";");
-        getColorStyle().setStyle("-fx-background-color: " + textColor + "; -fx-text-fill: " + backgroundColor + "; -fx-background-radius: 50");
-        outputDay.setStyle("-fx-text-fill: " + textColor + "; -fx-background-color: " + labelColor  + "; -fx-background-radius: 10");
-        outputMonth.setStyle("-fx-text-fill: " + textColor + "; -fx-background-color: " + labelColor + "; -fx-background-radius: 10");
-        outputYear.setStyle("-fx-text-fill: " + textColor + "; -fx-background-color: " + labelColor + "; -fx-background-radius: 10");
     }
 
     //getter and setter

@@ -1,5 +1,6 @@
 package com.example.calculator.controller;
 
+import com.example.calculator.controller.styles.Styles;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -49,15 +50,14 @@ public class NumberSystem extends UsualController implements Initializable {
         toggleButtons[3] = bin;
     }
 
-    //TODO: Переработать.
     @FXML
-    void buttonAction(ActionEvent event) {
+    void handleToggleButtons(ActionEvent event) {
         ToggleButton action = (ToggleButton) event.getSource();
         for (ToggleButton a : toggleButtons) {
             if (a == action) {
                 a.setSelected(true);
                 a.setDisable(true);
-                action.setStyle("-fx-background-color:  F29611; -fx-background-radius: 10 0 0 10; -fx-opacity: 1;");
+                Styles.applyActiveStyleNumSys(a);
                 active = getActionButton();
                 output = getLabelOutput(active);
                 setInfoAndOutput(action);
@@ -65,7 +65,7 @@ public class NumberSystem extends UsualController implements Initializable {
             } else {
                 a.setSelected(false);
                 a.setDisable(false);
-                a.setStyle("-fx-background-color:  #ACACAC; -fx-background-radius: 10 0 0 10");
+                Styles.applyInactiveStyleNumSys(a);
             }
         }
         if (!getOperation().isEmpty()) {
@@ -265,22 +265,13 @@ public class NumberSystem extends UsualController implements Initializable {
         return null;
     }
 
-    //TODO: Переработать.
     @Override
     void style(ActionEvent event) {
-        String backgroundColor;
-        String textColor;
-
-        if (getWindow().getStyle().equals("-fx-background-color: #111111;")) {
-            backgroundColor = "white";
-            textColor = "#111111";
+        if (getWindow().getStyle().equals("-fx-background-color: " + Styles.COLOR_BLACK + ";")) {
+            Styles.applyLightStyle(getWindow(), getColorStyle());
         } else {
-            backgroundColor = "#111111";
-            textColor = "white";
+            Styles.applyDarkStyle(getWindow(), getColorStyle());
         }
-
-        getWindow().setStyle("-fx-background-color: " + backgroundColor + ";");
-        getColorStyle().setStyle("-fx-background-color: " + textColor + "; -fx-text-fill: " + backgroundColor + "; -fx-background-radius: 50");
     }
 
     private boolean trueActive(){

@@ -1,6 +1,7 @@
 package com.example.calculator.controller;
 
 import com.example.calculator.controller.advancedFunction.*;
+import com.example.calculator.controller.styles.Styles;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -132,18 +133,15 @@ public class AdvancedController extends UsualController{
         getOutput().setText(Integer.toString(fibonacci));
     }
 
-    //TODO: Добавить классу стиля.
     @FXML
     private void radOrDeg(ActionEvent event) {
         String name = ((Button) event.getSource()).getText();
         if (name.equals("rad")) {
             radOrDeg = true;
-            rad.setStyle("-fx-background-color:  F29611; -fx-background-radius: 30 30 0 0");
-            deg.setStyle("-fx-background-color: #ACACAC; -fx-background-radius: 0 0 30 30");
+            Styles.applyRadStyle(rad, deg);
         } else {
             radOrDeg = false;
-            rad.setStyle("-fx-background-color: #ACACAC; -fx-background-radius: 30 30 0 0");
-            deg.setStyle("-fx-background-color:  F29611; -fx-background-radius: 0 0 30 30");
+            Styles.applyDegStyle(rad, deg);
         }
     }
 

@@ -125,17 +125,17 @@
                         <Insets />
                      </GridPane.margin>
                   </Label>
-                  <ToggleButton fx:id="day" focusTraversable="false" mnemonicParsing="false" onAction="#buttonAction" prefHeight="40.0" prefWidth="85.0" style="-fx-background-radius: 10; -fx-background-color: #ACACAC;" text="DAY" GridPane.rowIndex="3">
+                  <ToggleButton fx:id="day" focusTraversable="false" mnemonicParsing="false" onAction="#handleToggleButtons" prefHeight="40.0" prefWidth="85.0" style="-fx-background-radius: 10; -fx-background-color: #ACACAC;" text="DAY" GridPane.rowIndex="3">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>
                   </ToggleButton>
-                  <ToggleButton fx:id="year" focusTraversable="false" mnemonicParsing="false" onAction="#buttonAction" prefHeight="40.0" prefWidth="85.0" style="-fx-background-radius: 10; -fx-background-color: #ACACAC;" text="YEAR" GridPane.rowIndex="5">
+                  <ToggleButton fx:id="year" focusTraversable="false" mnemonicParsing="false" onAction="#handleToggleButtons" prefHeight="40.0" prefWidth="85.0" style="-fx-background-radius: 10; -fx-background-color: #ACACAC;" text="YEAR" GridPane.rowIndex="5">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>
                   </ToggleButton>
-                  <ToggleButton fx:id="month" focusTraversable="false" mnemonicParsing="false" onAction="#buttonAction" prefHeight="40.0" prefWidth="85.0" style="-fx-background-radius: 10; -fx-background-color: #ACACAC;" text="MONTH" GridPane.rowIndex="4">
+                  <ToggleButton fx:id="month" focusTraversable="false" mnemonicParsing="false" onAction="#handleToggleButtons" prefHeight="40.0" prefWidth="85.0" style="-fx-background-radius: 10; -fx-background-color: #ACACAC;" text="MONTH" GridPane.rowIndex="4">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>
@@ -221,8 +221,8 @@
                         <Font name="Arial" size="27.0" />
                      </font>
                   </Button>
-                  <ToggleButton fx:id="plus" mnemonicParsing="false" onAction="#actionOperation" prefWidth="120.0" style="-fx-background-radius: 10; -fx-background-color: #ACACAC;" text="Plus" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-                  <ToggleButton fx:id="minus" mnemonicParsing="false" onAction="#actionOperation" prefWidth="120.0" style="-fx-background-radius: 10; -fx-background-color: #ACACAC;" text="Minus" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                  <ToggleButton fx:id="plus" mnemonicParsing="false" onAction="#handleActionOperation" prefWidth="120.0" style="-fx-background-radius: 10; -fx-background-color: #ACACAC;" text="Plus" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                  <ToggleButton fx:id="minus" mnemonicParsing="false" onAction="#handleActionOperation" prefWidth="120.0" style="-fx-background-radius: 10; -fx-background-color: #ACACAC;" text="Minus" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="1" />
                </children>
                <padding>
                   <Insets top="5.0" />

@@ -1,5 +1,6 @@
 package com.example.calculator.controller;
 
+import com.example.calculator.controller.styles.Styles;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -71,24 +72,24 @@ public class PlusAndMinusDateController extends DifferenceDateController {
         }
     }
 
-    //TODO: Переработать.
     @FXML
-    void buttonAction(ActionEvent event) {
+    void handleToggleButtons(ActionEvent event) {
         ToggleButton action = (ToggleButton) event.getSource();
         for (ToggleButton a : toggleButtons) {
             if (a == action) {
                 a.setSelected(true);
                 a.setDisable(true);
-                action.setStyle("-fx-background-color:  F29611; -fx-background-radius: 10; -fx-opacity: 1;");
+                Styles.applyActiveStyle(a);
                 active = getActionButton();
                 output = getLabelOutput(active);
             } else {
                 a.setSelected(false);
                 a.setDisable(false);
-                a.setStyle("-fx-background-color:  #ACACAC; -fx-background-radius: 10");
+                Styles.applyInactiveStyle(a);
             }
         }
     }
+
 
     @Override
     protected void handleProcessNumPad(ActionEvent event) {
@@ -132,47 +133,29 @@ public class PlusAndMinusDateController extends DifferenceDateController {
         }
     }
 
-    //TODO: Переработать.
     @FXML
-    void actionOperation(ActionEvent event) {
-        if (plus == event.getSource()) {
-            plus.setSelected(true);
-            plus.setDisable(true);
-            plus.setStyle("-fx-background-color:  F29611; -fx-background-radius: 10; -fx-opacity: 1;");
-            minus.setSelected(false);
-            minus.setDisable(false);
-            minus.setStyle("-fx-background-color:  #ACACAC; -fx-background-radius: 10");
-            handleCalculateDate(event);
-        } else {
-            minus.setSelected(true);
-            minus.setDisable(true);
-            minus.setStyle("-fx-background-color:  F29611; -fx-background-radius: 10; -fx-opacity: 1;");
-            plus.setSelected(false);
-            plus.setDisable(false);
-            plus.setStyle("-fx-background-color:  #ACACAC; -fx-background-radius: 10");
-            handleCalculateDate(event);
-        }
+    void handleActionOperation(ActionEvent event) {
+        ToggleButton selectedButton = (ToggleButton) event.getSource();
+        ToggleButton otherButton = (selectedButton == plus) ? minus : plus;
+
+        selectedButton.setSelected(true);
+        selectedButton.setDisable(true);
+        Styles.applyActiveStyle(selectedButton);
+
+        otherButton.setSelected(false);
+        otherButton.setDisable(false);
+        Styles.applyInactiveStyle(otherButton);
+
+        handleCalculateDate(event);
     }
 
-    //TODO: переработать.
     @Override
     void style(ActionEvent event) {
-        String backgroundColor;
-        String textColor;
-
         if (getWindow().getStyle().equals("-fx-background-color: #111111;")) {
-            backgroundColor = "white";
-            textColor = "#111111";
+            Styles.applyLightStyle(getWindow(), getColorStyle(), getLabelStart(), labelAdd, labelResult);
         } else {
-            backgroundColor = "#111111";
-            textColor = "white";
+            Styles.applyDarkStyle(getWindow(), getColorStyle(), getLabelStart(), labelAdd, labelResult);
         }
-
-        getLabelStart().setStyle("-fx-text-fill: " + textColor + ";");
-        labelAdd.setStyle("-fx-text-fill: " + textColor + ";");
-        labelResult.setStyle("-fx-text-fill: " + textColor + ";");
-        getWindow().setStyle("-fx-background-color: " + backgroundColor + ";");
-        getColorStyle().setStyle("-fx-background-color: " + textColor + "; -fx-text-fill: " + backgroundColor + "; -fx-background-radius: 50");
     }
 
     private boolean trueActive(){
