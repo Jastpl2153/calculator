@@ -41,4 +41,5 @@ mvnw
 mvnw.cmd
 .idea/
 .mvn/
-
+out/
+META-INF/
